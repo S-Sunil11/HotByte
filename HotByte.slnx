@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HotByte.Api/HotByte.Api.csproj" />
+    <Project Path="src/HotByte.SharedKernel/HotByte.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/src/HotByte.Modules/">
+    <Project Path="src/HotByte.Modules/HotByte.Modules.Identity/HotByte.Modules.Identity.csproj" />
+    <Project Path="src/HotByte.Modules/HotByte.Modules.Menu/HotByte.Modules.Menu.csproj" />
+    <Project Path="src/HotByte.Modules/HotByte.Modules.Order/HotByte.Modules.Order.csproj" />
+    <Project Path="src/HotByte.Modules/HotByte.Modules.Restaurant/HotByte.Modules.Restaurant.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/HotByte.Identity.Tests/HotByte.Identity.Tests.csproj" />
+    <Project Path="tests/HotByte.Menu.Tests/HotByte.Menu.Tests.csproj" />
+    <Project Path="tests/HotByte.Order.Tests/HotByte.Order.Tests.csproj" />
+    <Project Path="tests/HotByte.Restaurant.Tests/HotByte.Restaurant.Tests.csproj" />
+  </Folder>
+</Solution>

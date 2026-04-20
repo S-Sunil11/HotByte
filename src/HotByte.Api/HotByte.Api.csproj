@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <NuGetAudit>false</NuGetAudit>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HotByte.Modules\HotByte.Modules.Identity\HotByte.Modules.Identity.csproj" />
+    <ProjectReference Include="..\HotByte.Modules\HotByte.Modules.Menu\HotByte.Modules.Menu.csproj" />
+    <ProjectReference Include="..\HotByte.Modules\HotByte.Modules.Order\HotByte.Modules.Order.csproj" />
+    <ProjectReference Include="..\HotByte.Modules\HotByte.Modules.Restaurant\HotByte.Modules.Restaurant.csproj" />
+    <ProjectReference Include="..\HotByte.SharedKernel\HotByte.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>
