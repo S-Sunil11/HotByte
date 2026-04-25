@@ -24,6 +24,14 @@ namespace HotByte.Api.Extensions
                     options.JsonSerializerOptions.Converters
                         .Add(new JsonStringEnumConverter());
                 });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("HotByteFrontend", p => p
+                    .WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials());
+            });
 
             services.AddEndpointsApiExplorer();
 
