@@ -21,6 +21,7 @@ namespace HotByte.Identity.Tests
         private SignInManager<AppUser> _signInManager = null!;
         private IConfiguration _config = null!;
         private Mock<IAuditLogRepository> _auditMock = null!;
+        private Mock<IIdentityEmailService> _emailMock = null!;
         private AuthService _service = null!;
 
         [SetUp]
@@ -54,8 +55,9 @@ namespace HotByte.Identity.Tests
                 }).Build();
 
             _auditMock = new Mock<IAuditLogRepository>();
+            _emailMock = new Mock<IIdentityEmailService>();
 
-            _service = new AuthService(_userManager, _signInManager, _config, _auditMock.Object);
+            _service = new AuthService(_userManager, _signInManager, _config, _auditMock.Object, _emailMock.Object);
         }
 
         [TearDown]

@@ -8,6 +8,7 @@ using System.Text;
 using HotByte.Modules.Identity.Application.Interfaces;
 using HotByte.Modules.Identity.Application.Services;
 using HotByte.Modules.Identity.Domain.Entities;
+using HotByte.Modules.Identity.Infrastructure.Email;
 using HotByte.Modules.Identity.Infrastructure.Repositories;
 using HotByte.SharedKernel.Interfaces;
 
@@ -81,6 +82,7 @@ namespace HotByte.Modules.Identity.Infrastructure.DependencyInjection
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuditLogRepository, AuditLogRepository>();
+            services.AddScoped<IIdentityEmailService, SmtpIdentityEmailService>();
 
             services.AddScoped<IAuthService, AuthService>();
             // UserService implements both IUserService and IUserPublicService

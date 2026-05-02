@@ -17,17 +17,20 @@ namespace HotByte.Modules.Identity.Application.Services
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IConfiguration _config;
         private readonly IAuditLogRepository _auditLog;
+        private readonly IIdentityEmailService _emailService;
 
         public AuthService(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             IConfiguration config,
-            IAuditLogRepository auditLog)
+            IAuditLogRepository auditLog,
+            IIdentityEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _config = config;
             _auditLog = auditLog;
+            _emailService = emailService;
         }
 
         public async Task<AuthResponseDto?> LoginAsync(LoginDto dto)
@@ -81,14 +84,30 @@ namespace HotByte.Modules.Identity.Application.Services
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null) return false;
 
-            await _userManager.GeneratePasswordResetTokenAsync(user);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = Uri.EscapeDataString(token);
+            var frontendUrl = _config["App:FrontendUrl"] ?? "http://localhost:3000";
+            var resetLink = $"{frontendUrl}/reset-password?userId={user.Id}&token={encodedToken}";
+
+            var body = $@"
+                <div style='font-family:Arial,sans-serif;max-width:480px;margin:auto;padding:24px;border:1px solid #e5e7eb;border-radius:12px'>
+                  <h2 style='color:#2563eb'>HotByte — Reset Your Password</h2>
+                  <p>Hi {user.Name},</p>
+                  <p>We received a request to reset your password. Click the button below to choose a new password.</p>
+                  <p style='text-align:center;margin:32px 0'>
+                    <a href='{resetLink}' style='background:#2563eb;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold'>Reset Password</a>
+                  </p>
+                  <p style='color:#6b7280;font-size:13px'>This link expires in 1 hour. If you did not request a password reset, you can safely ignore this email.</p>
+                </div>";
+
+            await _emailService.SendAsync(user.Email!, "Reset your HotByte password", body);
 
             await _auditLog.CreateAsync(new AuditLog
             {
                 UserID = user.Id,
                 Action = "FORGOT_PASSWORD",
                 Resource = "System",
-                Metadata = "Token generated"
+                Metadata = "Reset email sent"
             });
 
             return true;
